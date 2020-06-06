@@ -1,0 +1,3 @@
+name: video-to-3d-ai
+runtime: nodejs
+description: A minimal AWS TypeScript Pulumi program

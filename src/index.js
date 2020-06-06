@@ -60,3 +60,5 @@ render(
     <App />,
     document.getElementById('root')
 );
+
+export default () => console.log('hello world');
