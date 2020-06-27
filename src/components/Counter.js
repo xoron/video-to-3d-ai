@@ -5,7 +5,6 @@ import { Button } from 'react95';
 import { inc, dec } from '../redux/actions'
 
 const Counter = ({ count, inc, dec }) => {
-    debugger;
     return (
         <div style={{ display: 'inline-block', marginBottom: 10 }}>
             <Button onClick={dec}>dec</Button>
@@ -16,7 +15,6 @@ const Counter = ({ count, inc, dec }) => {
 }
 
 const mapStateToProps = ({ reducers: state }) => {
-    debugger;
     return ({
         count: state.count
     })

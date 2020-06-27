@@ -6,16 +6,18 @@ import { persistStore, persistReducer } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 
-import reducers from './reducers'
+import reducers from './reducers';
+import inputDataReducer from './input-data/reducer';
 
 const combinedReducers = combineReducers({
-    reducers
+    reducers,
+    inputData: inputDataReducer
 });
 
 const persistConfig = {
     key: 'root',
     storage,
-}
+};
 
 const persistedReducer = persistReducer(persistConfig, combinedReducers)
 

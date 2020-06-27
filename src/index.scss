@@ -13,6 +13,8 @@
     background-color: red;
     border: 5px solid black;
     border-radius: 30px;
+    transition: all 1s;
+    transform: translate(-50%, -50%);;
 }
 
 .take-screenshot-button {

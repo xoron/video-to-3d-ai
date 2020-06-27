@@ -1,6 +1,8 @@
 {
     "name": "glitr-blog pwa",
     "short_name": "glitr-blog",
+    "start_url": "./index.html",
+    "scope": ".",
     "icons": [
         {
             "src": "/statics/android-chrome-192x192.png",
@@ -13,6 +15,12 @@
             "type": "image/png"
         }
     ],
+    "serviceworker": {
+        "src": "./service-worker.js",
+        "scope": "/",
+        "type": "",
+        "update_via_cache": "none"
+    },
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
     "display": "standalone"
