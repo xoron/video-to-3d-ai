@@ -10,3 +10,8 @@ export const addCurrentDataToSessions = () => ({
 export const resetCurrentData = () => ({
     type: 'reset_current_data'
 });
+
+export const deleteSession = sessionIndex => ({
+    type: 'delete_session_at_index',
+    payload: sessionIndex
+});

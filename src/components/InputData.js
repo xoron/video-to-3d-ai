@@ -91,7 +91,7 @@ const InputData = ({
                 <Counter /> <br />
                 <Button onClick={() => setIsRecording(!isRecording)}>{`${isRecording ? 'recording' : 'start recording'} - sample size: ${sampleCount}`}</Button>
                 <Button onClick={resetCurrentData}>reset</Button>
-                <Button onClick={addCurrentDataToSessions}>save session</Button>
+                <Button onClick={addCurrentDataToSessions} disabled={!sampleCount || isRecording}>save session</Button>
                 <video
                     ref={videoRef}
                     className="video"

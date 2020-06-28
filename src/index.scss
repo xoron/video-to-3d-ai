@@ -2,8 +2,8 @@
     position: absolute;
     bottom: 50px;
     left: 50px;
-    height: 100px;
-    width: 100px;
+    height: 200px;
+    width: 200px;
 };
 
 .target {
@@ -35,4 +35,8 @@
     position: relative;
     height: 100%;
     background-color: teal;
+
+    .rangeslider__fill {
+        background-color: teal;
+    }
 }

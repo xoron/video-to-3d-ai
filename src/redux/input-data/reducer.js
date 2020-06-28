@@ -27,6 +27,11 @@ export default (state = initialState, action) => {
                 ...state,
                 currentSession: initialState.currentSession
             }
+        case 'delete_session_at_index':
+            return {
+                ...state,
+                sessions: state.sessions.filter((_, index) => index !== action.payload)
+            }
         default:
             return state
     }
