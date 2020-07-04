@@ -4,10 +4,12 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { reset, themes, List, ListItem, Divider, AppBar, Toolbar, Cutout, TextField, Button, Window, WindowContent, WindowHeader } from 'react95';
 import InputData from './InputData';
 import Sessions from './Sessions';
+import AI from './AI';
 
 const applications = {
     InputData,
-    Sessions
+    Sessions,
+    AI
 }
 
 const ResetStyles = createGlobalStyle`
@@ -16,7 +18,7 @@ const ResetStyles = createGlobalStyle`
 
 export default () => {
     const [open, setOpen] = useState(false)
-    const [selected, setSelected] = useState('Sessions');
+    const [selected, setSelected] = useState('AI');
     const CurrentApplication = applications[selected];
     return (
         <ReduxProvider>
@@ -33,6 +35,7 @@ export default () => {
                                         <List horizontalAlign="left" verticalAlign="top" open={open} onClick={() => setOpen(!open)}>
                                             <ListItem onClick={() => setSelected('InputData')}>👨‍💻 input data</ListItem>
                                             <ListItem onClick={() => setSelected('Sessions')}>📁 view sessions</ListItem>
+                                            <ListItem onClick={() => setSelected('AI')}>🤖 AI</ListItem>
                                             <Divider />
                                             <ListItem disabled>🔙 Logout</ListItem>
                                         </List>

@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@pulumi/aws": "^2.8.0",
+    "@tensorflow/tfjs": "^2.0.1",
     "mime": "^2.4.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
