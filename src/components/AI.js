@@ -9,7 +9,7 @@ const createModel = () => {
     const model = tf.sequential(); 
     
     // Add a single input layer
-    model.add(tf.layers.dense({ units: 32, inputShape: [1], useBias: true, activation: 'relu'}));
+    model.add(tf.layers.dense({ units: 32, inputShape: [27,200], useBias: true, activation: 'relu'}));
 
     // Add a few hidden layers
     model.add(tf.layers.dense({ units: 128, activation: 'relu'}));
@@ -24,17 +24,42 @@ const createModel = () => {
     return model;
 }
 
+const base64ToByteArray = (base64String) => {
+    try {            
+        var sliceSize = 200;
+        var byteCharacters = atob(base64String.split('data:image/webp;base64,')[1]);
+        var bytesLength = byteCharacters.length;
+        var slicesCount = Math.ceil(bytesLength / sliceSize);
+        var byteArrays = new Array(slicesCount);
+
+        for (var sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+            var begin = sliceIndex * sliceSize;
+            var end = Math.min(begin + sliceSize, bytesLength);
+
+            var bytes = new Array(end - begin);
+            for (var offset = begin, i = 0; offset < end; ++i, ++offset) {
+                bytes[i] = byteCharacters[offset].charCodeAt(0);
+            }
+            byteArrays[sliceIndex] = new Uint8Array(bytes);
+        }
+        return byteArrays;
+    } catch (e) {
+        console.log("Couldn't convert to byte array: " + e);
+        return undefined;
+    }
+}
+
 const createFeatureLabelTensors = (sessions) => {
 
     const convertToFeatureVector = (
         data
     ) => {
-        const feature = [
-            data.feature
-        ];
+        console.log(base64ToByteArray(data));
+        debugger;
+        const feature = base64ToByteArray(data.feature);
 
         return tf.tidy(() => ({
-            features: tf.tensor(feature, [feature.length]).dataSync(),
+            features: tf.tensor(feature, [27,200]).dataSync(),
             label: tf.tensor([data.label.top, data.label.left], [2]).dataSync()
         }));
     }
@@ -71,7 +96,7 @@ const AI = ({
     const featuresAndLabels = createFeatureLabelTensors(sessions);
     debugger;
 
-    const featureTensors = tf.tensor2d(featuresAndLabels.map(({ features }) => features), [featuresAndLabels.length, 1]);
+    const featureTensors = tf.tensor2d(featuresAndLabels.map(({ features }) => base64ToByteArray(features)), [5600]);
     const labelTensors = tf.tensor2d(featuresAndLabels.map(({ label }) => label), [featuresAndLabels.length, 2]);
     debugger;
 
