@@ -18,7 +18,7 @@ const ResetStyles = createGlobalStyle`
 
 export default () => {
     const [open, setOpen] = useState(false)
-    const [selected, setSelected] = useState('AI');
+    const [selected, setSelected] = useState('Sessions');
     const CurrentApplication = applications[selected];
     return (
         <ReduxProvider>

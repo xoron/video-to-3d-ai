@@ -37,7 +37,7 @@ const Sessions = ({
                 </Button>
             </Toolbar>
             <WindowContent>
-                {sessions.map((session, index) => <SessionPreview session={session} deleteSession={() => deleteSession(index)} />)}
+                {sessions.map((session, index) => <SessionPreview key={index} session={session} deleteSession={() => deleteSession(index)} />)}
             </WindowContent>
         </Window>
     )

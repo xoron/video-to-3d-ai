@@ -20,16 +20,30 @@ const InputData = ({
         const canvas = document.createElement('canvas');
         canvas.width = videoRef.current.videoWidth;
         canvas.height = videoRef.current.videoHeight;
-        canvas.getContext('2d').drawImage(videoRef.current, 0, 0);
+        const context = canvas.getContext('2d');
+        context.drawImage(videoRef.current, 0, 0);
 
-        const feature = canvas.toDataURL('image/webp');
+        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        // const index = (y*imageData.width + x) * 4;
+        // const red = imageData.data[index];
+        // const green = imageData.data[index + 1];
+        // const blue = imageData.data[index + 2];
+        // const alpha = imageData.data[index + 3];
+        // debugger;
+
+        const base64 = canvas.toDataURL('image/webp');
         const label = {
             top: parseInt(targetRef.current.style.top),
             left: parseInt(targetRef.current.style.left)
         }
 
+        const featureMatrix = [];
+        imageData.data.forEach(val => featureMatrix.push(val));
+
+        debugger;
         return ({
-            feature,
+            base64,
+            feature: JSON.stringify(featureMatrix),
             label
         });
     };

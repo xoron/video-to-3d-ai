@@ -17,7 +17,7 @@ const SessionPreview = ({ session, deleteSession }) => {
                 onChangeComplete={() => console.log('ending slider')}
             />
             <div style={{display: 'flex', marginBottom: 20 }}>
-                <img src={session.data[sliderVal].feature} />
+                <img src={session.data[sliderVal].base64} />
                 <div style={{ position: 'relative', marginLeft: 20, height: 200, width: 200, backgroundColor: 'teal', overflow: 'hidden' }}>
                     <div className="target" style={{ position: 'absolute', height: 10, width: 10, borderWidth: 2, top: `${session.data[sliderVal].label.top}%`, left: `${session.data[sliderVal].label.left}%` }}></div>
                 </div>
