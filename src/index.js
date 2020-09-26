@@ -45,6 +45,7 @@
 //   console.log("canvas.toDataURL('image/webp')", canvas.toDataURL('image/webp'))
 // };
 
+import "babel-polyfill";
 import React from 'react'
 import { render } from 'react-dom'
 import App from './components/App'

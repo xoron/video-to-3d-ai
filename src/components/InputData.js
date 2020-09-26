@@ -43,7 +43,7 @@ const InputData = ({
         debugger;
         return ({
             base64,
-            feature: JSON.stringify(featureMatrix),
+            // feature: featureMatrix, // JSON.stringify(featureMatrix),
             label
         });
     };

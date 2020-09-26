@@ -9,18 +9,15 @@ const createModel = () => {
     const model = tf.sequential(); 
     
     // Add a single input layer
-    model.add(tf.layers.dense({ units: 32, inputShape: [160000], useBias: true, activation: 'relu'}));
+    model.add(tf.layers.dense({ units: 32, inputShape: [160000], useBias: true, activation: 'linear'}));
 
     // Add a few hidden layers
-    model.add(tf.layers.dense({ units: 128, activation: 'relu'}));
-    model.add(tf.layers.dense({ units: 1024, activation: 'relu'}));
-    model.add(tf.layers.dense({ units: 1024, activation: 'relu'}));
-    model.add(tf.layers.dense({ units: 1024, activation: 'relu'}));
-    model.add(tf.layers.dense({ units: 1024, activation: 'relu'}));
-    model.add(tf.layers.dense({ units: 512, activation: 'relu'}));
-    model.add(tf.layers.dense({ units: 256, activation: 'relu'}));
-    model.add(tf.layers.dense({ units: 64, activation: 'relu'}));
-    model.add(tf.layers.dense({ units: 64, activation: 'relu'}));
+    model.add(tf.layers.dense({ units: 128, activation: 'linear'}));
+    model.add(tf.layers.dense({ units: 512, activation: 'linear'}));
+    model.add(tf.layers.dense({ units: 1024, activation: 'linear'}));
+    model.add(tf.layers.dense({ units: 512, activation: 'linear'}));
+    model.add(tf.layers.dense({ units: 256, activation: 'linear'}));
+    model.add(tf.layers.dense({ units: 64, activation: 'linear'}));
 
     // Add an output layer
     model.add(tf.layers.dense({units: 2, useBias: true, activation: 'linear'}));
@@ -55,22 +52,44 @@ const createModel = () => {
 
 const createFeatureLabelTensors = (sessions) => {
 
-    const convertToFeatureVector = (
+    const createFeatureMatrix = (base64) => {
+        return new Promise((resolve) => {
+            const img = new Image();
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+
+            img.onload = function() {
+                context.drawImage(img, 0, 0);
+                canvas.width = img.width;
+                canvas.height = img.height;
+    
+                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                
+                const featureMatrix = [];
+                imageData.data.forEach(val => featureMatrix.push(val));
+                resolve(featureMatrix);
+            };
+            img.src = base64;
+        });
+    }
+
+    const convertToFeatureVector = async (
         data
     ) => {
-        const feature = JSON.parse(data.feature);
-        debugger;
+        const feature = await createFeatureMatrix(data.base64);
 
         return tf.tidy(() => ({
             features: tf.tensor(feature, [160000]).dataSync(),
             label: tf.tensor([data.label.top, data.label.left], [2]).dataSync()
         }));
     }
-    
-    return sessions.map(session => session.data
+
+    const sessionsMatris = sessions.map(session => session.data
         .filter(data => !!data.label.top)
-        .map(convertToFeatureVector))
-        .flat();
+        .map(convertToFeatureVector));
+
+    debugger;
+    return sessionsMatris.flat();
 }
 
 const trainModel = (model, inputs, labels) => {
@@ -98,22 +117,38 @@ const testModel = (model, inputData) => {
 const AI = ({
     sessions
 }) => {
-    debugger;
+    const [featuresAndLabels, setFeaturesAndLabels] = useState(null)
     const model = createModel();
-    const featuresAndLabels = createFeatureLabelTensors(sessions);
     debugger;
 
-    const featureTensors = tf.tensor2d(featuresAndLabels.map(({ features }) => (features)), [featuresAndLabels.length, 160000]);
-    const labelTensors = tf.tensor2d(featuresAndLabels.map(({ label }) => label), [featuresAndLabels.length, 2]);
+    useEffect(() => {
+        Promise.all(createFeatureLabelTensors(sessions))
+            .then((featuresAndLabels) => {
+                debugger;
+                setFeaturesAndLabels(featuresAndLabels);
+            })
+    }, [sessions]);
     debugger;
+    
 
-    trainModel(model, featureTensors, labelTensors)
-        .then(() => {
-            console.log('training finished');
-            debugger;
-            testModel(model, featuresAndLabels);
-        });
-    debugger;
+    
+    // const featuresAndLabels = createFeatureLabelTensors(sessions);
+    // debugger;
+
+    if (!!featuresAndLabels) {
+        const featureTensors = tf.tensor2d(featuresAndLabels.map(({ features }) => (features)), [featuresAndLabels.length, 160000]);
+        const labelTensors = tf.tensor2d(featuresAndLabels.map(({ label }) => label), [featuresAndLabels.length, 2]);
+        debugger;
+    
+        trainModel(model, featureTensors, labelTensors)
+            .then(() => {
+                console.log('training finished');
+                debugger;
+                testModel(model, featuresAndLabels);
+            });
+        debugger;
+    }
+
 
     return (
         <Window style={{ width: '100%', flex: 2 }}>

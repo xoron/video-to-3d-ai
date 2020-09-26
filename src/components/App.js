@@ -5,11 +5,13 @@ import { reset, themes, List, ListItem, Divider, AppBar, Toolbar, Cutout, TextFi
 import InputData from './InputData';
 import Sessions from './Sessions';
 import AI from './AI';
+import ThreeD from './ThreeD';
 
 const applications = {
     InputData,
     Sessions,
-    AI
+    AI,
+    ThreeD
 }
 
 const ResetStyles = createGlobalStyle`
@@ -18,7 +20,7 @@ const ResetStyles = createGlobalStyle`
 
 export default () => {
     const [open, setOpen] = useState(false)
-    const [selected, setSelected] = useState('Sessions');
+    const [selected, setSelected] = useState('ThreeD');
     const CurrentApplication = applications[selected];
     return (
         <ReduxProvider>
@@ -36,6 +38,7 @@ export default () => {
                                             <ListItem onClick={() => setSelected('InputData')}>👨‍💻 input data</ListItem>
                                             <ListItem onClick={() => setSelected('Sessions')}>📁 view sessions</ListItem>
                                             <ListItem onClick={() => setSelected('AI')}>🤖 AI</ListItem>
+                                            <ListItem onClick={() => setSelected('ThreeD')}>🧊 3D</ListItem>
                                             <Divider />
                                             <ListItem disabled>🔙 Logout</ListItem>
                                         </List>
