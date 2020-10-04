@@ -46,9 +46,9 @@
 // };
 
 import "babel-polyfill";
-import React from 'react'
-import { render } from 'react-dom'
-import App from './components/App'
+import React from "react";
+import { render } from "react-dom";
+import App from "./components/App";
 
 /*
 user flow:
@@ -57,9 +57,6 @@ user flow:
 
 */
 
-render(
-    <App />,
-    document.getElementById('root')
-);
+render(<App />, document.getElementById("root"));
 
-export default () => console.log('hello world');
+export default () => console.log("hello world");

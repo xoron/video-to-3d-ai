@@ -1,7 +1,7 @@
 export const inc = () => ({
-    type: 'inc'
-})
+  type: "inc",
+});
 
 export const dec = () => ({
-    type: 'dec'
-})
+  type: "dec",
+});

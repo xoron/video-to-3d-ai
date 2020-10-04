@@ -1,38 +1,37 @@
+import React from "react";
+import { Provider } from "react-redux";
+import { createStore, combineReducers } from "redux";
+import { persistStore, persistReducer } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
-import React from 'react'
-import { Provider } from 'react-redux'
-import { createStore, combineReducers } from 'redux'
-import { persistStore, persistReducer } from 'redux-persist'
-import { PersistGate } from 'redux-persist/integration/react'
-import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
-
-import reducers from './reducers';
-import inputDataReducer from './input-data/reducer';
+import reducers from "./reducers";
+import inputDataReducer from "./input-data/reducer";
 
 const combinedReducers = combineReducers({
-    reducers,
-    inputData: inputDataReducer
+  reducers,
+  inputData: inputDataReducer,
 });
 
 const persistConfig = {
-    key: 'root',
-    storage,
+  key: "root",
+  storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, combinedReducers)
+const persistedReducer = persistReducer(persistConfig, combinedReducers);
 
 const store = createStore(
-    persistedReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-)
-const persistor = persistStore(store)
+  persistedReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+const persistor = persistStore(store);
 
 const ReduxProvider = ({ children }) => (
-    <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-            {children}
-        </PersistGate>
-    </Provider>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      {children}
+    </PersistGate>
+  </Provider>
 );
 
 export default ReduxProvider;

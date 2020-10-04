@@ -1,30 +1,48 @@
 <html>
-    <head>
-        <link rel="stylesheet" href="./index.scss">
-        <link rel="apple-touch-icon" sizes="180x180" href="/statics/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/statics/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/statics/favicon-16x16.png" />
-        <link rel="manifest" href="/manifest.webmanifest" />
-        <link rel="mask-icon" href="/statics/safari-pinned-tab.svg" color="#5bbad5" />
-        <meta name="msapplication-TileColor" content="#da532c" />
-        <meta name="theme-color" content="#ffffff" />
-    </head>
-    <body>
-        <!-- <video class="video" autoplay></video>
+  <head>
+    <link rel="stylesheet" href="./index.scss" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/statics/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/statics/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/statics/favicon-16x16.png"
+    />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link
+      rel="mask-icon"
+      href="/statics/safari-pinned-tab.svg"
+      color="#5bbad5"
+    />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body>
+    <!-- <video class="video" autoplay></video>
         <img class="screenshot" src="" />
         <button class="take-screenshot-button">take screenshot</button>
         <div class="target"></div> -->
-        
-        <div id="root"></div>
-        <script src="./index.js"></script>
-        <script>
-            // Check that service workers are supported
-            if ('serviceWorker' in navigator) {
-              // Use the window load event to keep the page load performant
-              window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js');
-              });
-            }
-        </script>
-    </body>
+
+    <div id="root"></div>
+    <script src="./index.js"></script>
+    <script>
+      // Check that service workers are supported
+      if ("serviceWorker" in navigator) {
+        // Use the window load event to keep the page load performant
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("/service-worker.js");
+        });
+      }
+    </script>
+  </body>
 </html>

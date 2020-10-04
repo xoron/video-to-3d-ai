@@ -7,6 +7,7 @@
     "@babel/core": "^7.11.1",
     "@babel/plugin-transform-async-to-generator": "^7.10.4",
     "parcel-bundler": "^1.12.4",
+    "prettier": "2.1.2",
     "sass": "^1.26.5"
   },
   "scripts": {
@@ -14,7 +15,9 @@
     "build": "parcel build ./src/index.html",
     "build:serve": "yarn run build && yarn run serve dist/ -p 1234",
     "docker:build": "sudo docker build -t pulumi . && sudo docker run -v=$PWD:/app -it pulumi npm install",
-    "docker:pulumi": "sudo docker run --env-file=.env -v=$PWD:/app -it pulumi pulumi"
+    "docker:pulumi": "sudo docker run --env-file=.env -v=$PWD:/app -it pulumi pulumi",
+    "format:check": "yarn run prettier --check .",
+    "format:write": "yarn run prettier --write ."
   },
   "dependencies": {
     "@pulumi/aws": "^2.8.0",
